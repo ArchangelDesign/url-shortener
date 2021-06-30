@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "3a85fbfe-7bab-4f88-90f8-4956491b78c7",
+		"name": "URL Shortener",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Websites",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-shortener}}/api/website/list",
+					"host": [
+						"{{url-shortener}}"
+					],
+					"path": [
+						"api",
+						"website",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Website Hash",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"https://google.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-shortener}}/api/website?XDEBUG_SESSION_START=13352",
+					"host": [
+						"{{url-shortener}}"
+					],
+					"path": [
+						"api",
+						"website"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION_START",
+							"value": "13352"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Website",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"url\": \"https://google.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url-shortener}}/api/website",
+					"host": [
+						"{{url-shortener}}"
+					],
+					"path": [
+						"api",
+						"website"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Service Alive",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url-shortener}}/api/alive",
+					"host": [
+						"{{url-shortener}}"
+					],
+					"path": [
+						"api",
+						"alive"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
