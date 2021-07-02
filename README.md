@@ -44,7 +44,7 @@ curl --location -g --request POST '{{url-shortener}}/api/website?XDEBUG_SESSION_
 }'
 ```
 
-Response 201 or 400
+Response 201 or 400 or 200
 
 ```
 {

@@ -16,12 +16,24 @@ class ApiTest extends TestCase
         $this->assertIsArray($responseBody);
     }
 
-    public function testCreateWebsiteEntry(): void
+    public function testCreateNewWebsiteEntry(): void
     {
         $url = 'http://localhost.local/my-link';
         try {
             $response = $this->post('/api/website', ['url' => $url]);
             $response->assertStatus(201);
+        } finally {
+            $this->delete('/api/website', ['url' => $url]);
+        }
+    }
+
+    public function testCreateExistingWebsiteEntry(): void
+    {
+        $url = 'https://unique-address.com';
+        $this->post('/api/website', ['url' => $url]);
+        $response = $this->post('/api/website', ['url' => $url]);
+        try {
+            $this->assertEquals(200, $response->getStatusCode(), 'Create endpoint did not return 200 for existing entry');
         } finally {
             $this->delete('/api/website', ['url' => $url]);
         }
