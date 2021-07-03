@@ -103,3 +103,9 @@ User will be created and token will be generated and presented.
 ```
 ./artisan user:regen <name>
 ```
+
+## Make user admin
+DELETE endpoint requires user to have is_admin flag up
+```
+./artisan user:admin <name>
+```
