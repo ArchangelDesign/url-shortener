@@ -2,11 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\Authenticate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ApiTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutMiddleware(null);
+    }
+
     public function testListExistingWebsites()
     {
         $response = $this->get('/api/website/list');

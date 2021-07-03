@@ -75,3 +75,31 @@ OR
     "message": "URL not found"
 }
 ```
+
+## UPDATE
+### 2021-07-02
+
+Added token authentication
+
+```
+curl --location --request DELETE 'http://url-shortener.local/api/website?XDEBUG_SESSION_START=19293' \
+--header 'Accept: application/json' \
+--header 'Authorization: Bearer 7b18eaae-f1db-4e0f-b5e8-957a04c57187s' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: XDEBUG_SESSION=19293' \
+--data-raw '{
+    "url": "https://google.com"
+}'
+```
+
+### To create user run command 
+```
+./artisan user:create <name>
+```
+
+User will be created and token will be generated and presented.
+
+### Regenerate token for a user
+```
+./artisan user:regen <name>
+```
