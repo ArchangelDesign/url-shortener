@@ -9,5 +9,6 @@ Route::get('/alive', function () {
 Route::group(['middleware' => 'auth:api_token'], function() {
     Route::get('/website/list', 'App\Http\Controllers\WebsiteController@listWebsites');
     Route::post('/website', 'App\Http\Controllers\WebsiteController@createWebsite');
-    Route::delete('/website', 'App\Http\Controllers\WebsiteController@deleteWebsite');
+    Route::delete('/website', 'App\Http\Controllers\WebsiteController@deleteWebsite')
+        ->middleware(\App\Http\Middleware\AdminAccess::class);
 });

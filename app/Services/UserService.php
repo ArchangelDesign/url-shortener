@@ -79,4 +79,10 @@ class UserService
         $res = User::find($token);
         return $res;
     }
+
+    public function makeUserAdmin(User $user): void
+    {
+        $user->is_admin = true;
+        $user->save();
+    }
 }
