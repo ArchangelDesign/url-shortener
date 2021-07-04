@@ -3,11 +3,16 @@
 namespace App\Services;
 
 use App\Entities\WebsiteAddress;
+use App\Exceptions\InvalidHash;
 use App\Exceptions\InvalidUrlProvided;
 use App\Exceptions\UrlIsTooLong;
 use App\Exceptions\UrlNotFound;
 use App\Models\Website;
 
+/**
+ * Class ShortenerService
+ * @package App\Services
+ */
 class ShortenerService
 {
     const MAX_URL_LENGTH = 250;
@@ -36,27 +41,37 @@ class ShortenerService
         return new WebsiteAddress($url, $this->generateHash());
     }
 
+    /**
+     * @param string $url
+     * @return bool
+     */
     public function isValidUrl(string $url): bool
     {
         return filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 
-    public function normalize(string $url): string
-    {
-        $parsed = parse_url($url, PHP_URL_HOST);
-        if ($parsed === false)
-            throw new InvalidUrlProvided();
-
-        return $parsed;
-    }
-
+    /**
+     * Generates a random string 8 character long.
+     * It is used to identify original URL
+     *
+     * @return string
+     */
     public function generateHash(): string
     {
         return substr(str_shuffle(str_repeat('0123456789abcdefghijklmnopqrstvwxyz', 36)), 0, 8);
     }
 
+    /**
+     * Stores generated website
+     *
+     * @param WebsiteAddress $websiteAddress
+     * @throws InvalidHash
+     */
     public function storeWebsite(WebsiteAddress $websiteAddress)
     {
+        if (empty($websiteAddress->getHash()))
+            throw new InvalidHash();
+
         Website::create(['url' => $websiteAddress->getUrl(), 'hash' => $websiteAddress->getHash()]);
     }
 
@@ -83,11 +98,20 @@ class ShortenerService
         Website::find($hash)->delete();
     }
 
+    /**
+     * Returns an array of all shortened websites
+     *
+     * @return array
+     */
     public function fetchAll(): array
     {
         return Website::all()->toArray();
     }
 
+    /**
+     * @param string $url
+     * @return bool
+     */
     public function websiteExists(string $url): bool
     {
         try {

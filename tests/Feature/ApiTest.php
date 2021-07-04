@@ -107,4 +107,12 @@ class ApiTest extends TestCase
         $this->assertEquals($hash, $response->json('hash'),
             'Create endpoint did not return existing hash.');
     }
+
+    public function testInvalidUrl(): void
+    {
+        $url = '12345';
+        $response = $this->post('/api/website', ['url' => $url]);
+        $this->assertEquals(400, $response->getStatusCode(),
+            'Create endpoint did not respond with 400 for invalid URL');
+    }
 }

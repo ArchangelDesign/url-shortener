@@ -6,6 +6,10 @@ use App\Exceptions\UserNotFound;
 use App\Models\User;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Class UserService
+ * @package App\Services
+ */
 class UserService
 {
     /**
@@ -66,7 +70,6 @@ class UserService
      */
     public function regenerateToken(string $name): User
     {
-        /** @var User $user */
         $user = $this->fetchUserByName($name);
         $user->token = Uuid::uuid4();
         $user->save();
